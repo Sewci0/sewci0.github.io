@@ -137,22 +137,22 @@ $(function() {
 			$('.teleprompter').toggleClass('flipy');
 		}
 
-		if ($('.teleprompter').hasClass('flipy')) {
-      $('article').stop().animate({scrollTop: $(".teleprompter").height() + 100 }, 250, 'swing', function(){ $('article').clearQueue(); });
-		} else {
-      $('article').stop().animate({scrollTop: 0 }, 250, 'swing', function(){ $('article').clearQueue(); });
-		}
+
+    	$('article').stop().animate({scrollTop: 0 }, 250, 'swing', function(){ $('article').clearQueue(); });
+
 	});
 	// Listen for Reset Button Click
 	$('.button.reset').click(function(){
 		stop_teleprompter();
 		timer.resetTimer();
-		if($('.teleprompter').hasClass('flipy')){
-			$('article').stop().animate({scrollTop: $(".teleprompter").height() + 100 }, 500, 'swing', function(){ $('article').clearQueue(); });
-		}else {
-			$('article').stop().animate({scrollTop: 0}, 100, 'linear', function(){ $('article').clearQueue(); });	
+		$('article').stop().animate({scrollTop: 0}, 100, 'linear', function(){ $('article').clearQueue(); });
+
+		if ($('.teleprompter').hasClass('flipy')) {
+      		$('article').stop().animate({scrollTop: $(".teleprompter").height() + 100 }, 250, 'swing', function(){ $('article').clearQueue(); });
+		} else {
+			$('article').stop().animate({scrollTop: 0}, 100, 'linear', function(){ $('article').clearQueue(); });
+
 		}
-		
 	});
 
 	// Turn flip y on default
