@@ -147,7 +147,12 @@ $(function() {
 	$('.button.reset').click(function(){
 		stop_teleprompter();
 		timer.resetTimer();
-		$('article').stop().animate({scrollTop: 0}, 100, 'linear', function(){ $('article').clearQueue(); });
+		if($('.teleprompter').hasClass('flipy')){
+			$('article').stop().animate({scrollTop: $(".teleprompter").height() + 100 }, 500, 'swing', function(){ $('article').clearQueue(); });
+		}else {
+			$('article').stop().animate({scrollTop: 0}, 100, 'linear', function(){ $('article').clearQueue(); });	
+		}
+		
 	});
 
 	// Turn flip y on default
@@ -208,7 +213,8 @@ function pageScroll()
         $('article').stop().animate({scrollTop: $(".teleprompter").height() + 100 }, 500, 'swing', function(){ $('article').clearQueue(); });
       }, 500);
     }
-	} else {
+	} 
+	else {
     $('article').animate({scrollTop: "+=1px" }, 0, 'linear', function(){ $('article').clearQueue(); });
 
     clearTimeout(scrollDelay);
