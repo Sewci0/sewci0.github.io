@@ -283,14 +283,24 @@ function navigate(evt)
 	}
 	else if(evt.keyCode == down)
 	{
-		$('article').animate({scrollTop: "+=100xpx" }, 250, 'swing', function(){ $('article').clearQueue(); });
+		if($('.teleprompter').hasClass('flipx')){
+			$('article').animate({scrollTop: "-=100xpx" }, 250, 'swing', function(){ $('article').clearQueue(); });
+		}
+		else {
+			$('article').animate({scrollTop: "+=100xpx" }, 250, 'swing', function(){ $('article').clearQueue(); });
+		}
 		evt.preventDefault();
 		evt.stopPropagation();
 		return false;
 	}
 	else if(evt.keyCode == up)
 	{
-		$('article').animate({scrollTop: "-=100xpx" }, 250, 'swing', function(){ $('article').clearQueue(); });
+		if($('.teleprompter').hasClass('flipx')){
+			$('article').animate({scrollTop: "+=100xpx" }, 250, 'swing', function(){ $('article').clearQueue(); });
+		}
+		else {
+			$('article').animate({scrollTop: "-=100xpx" }, 250, 'swing', function(){ $('article').clearQueue(); });
+		}
 		evt.preventDefault();
 		evt.stopPropagation();
 		return false;
