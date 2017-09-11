@@ -238,6 +238,7 @@ function navigate(evt)
 		font_size = $('.font_size').slider('value');
 
 	// Exit if we're inside an input field
+	/*
 	if (typeof evt.target.id == 'undefined' || evt.target.id == 'teleprompter')
 	{
 		return;
@@ -248,6 +249,7 @@ function navigate(evt)
 		evt.stopPropagation();
 		return false;
 	}
+	*/
 
 	// Reset GUI
 	if(evt.keyCode == escape)
@@ -317,11 +319,12 @@ function navigate(evt)
 // Start Teleprompter
 function start_teleprompter()
 {
-	$('#teleprompter').attr('contenteditable', false);
+	//$('#teleprompter').attr('contenteditable', false);
 	$('body').addClass('playing');
 	$('.button.play').removeClass('icon-play').addClass('icon-pause');
 	$('header h1, header nav').fadeTo('slow', 0.15);
 	$('.marker, .overlay').fadeIn('slow');
+	$('header').fadeOut();
 
 	window.timer.startTimer();
 
@@ -332,11 +335,12 @@ function start_teleprompter()
 function stop_teleprompter()
 {
 	clearTimeout(scrollDelay);
-	$('#teleprompter').attr('contenteditable', true);
+	//$('#teleprompter').attr('contenteditable', true);
 	$('header h1, header nav').fadeTo('slow', 1);
 	$('.button.play').removeClass('icon-pause').addClass('icon-play');
 	$('.marker, .overlay').fadeOut('slow');
 	$('body').removeClass('playing');
+	$('header').fadeIn();
 
 	window.timer.stopTimer();
 }
