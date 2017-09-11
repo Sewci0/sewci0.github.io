@@ -8,6 +8,9 @@ var initPageSpeed = 35,
 $(function() {
 
 	// Check if we've been here before and made changes
+	storage=Storages.localStorage
+
+
 	if($.cookie('teleprompter_font_size'))
 	{
 		initFontSize = $.cookie('teleprompter_font_size');
@@ -16,9 +19,9 @@ $(function() {
 	{
 		initPageSpeed = $.cookie('teleprompter_speed');
 	}
-	if($.cookie('teleprompter_text'))
+	if(storage.isSet('teleprompter_text'))
 	{
-		$('#teleprompter').html($.cookie('teleprompter_text'));
+		$('#teleprompter').html(storage.get('teleprompter_text'));
 	}
 	if($.cookie('teleprompter_text_color'))
 	{
@@ -88,6 +91,11 @@ $(function() {
 	// Run initial configuration on sliders
 	fontSize(false);
 	speed(false);
+
+	//Listen for Login Button Click
+	$('.login').click(function(){
+		handleAuthClick()
+	});
 
 	// Listen for Play Button Click
 	$('.button.play').click(function(){
@@ -212,6 +220,9 @@ function pageScroll()
 	}
 }
 
+
+
+
 // Listen for Key Presses on Body
 function navigate(evt)
 {
@@ -221,6 +232,8 @@ function navigate(evt)
 		up = 38,
 		right = 39,
 		down = 40,
+		ab = 65,
+		zb = 90,
 		speed = $('.speed').slider('value'),
 		font_size = $('.font_size').slider('value');
 
@@ -260,22 +273,21 @@ function navigate(evt)
 		evt.stopPropagation();
 		return false;
 	}
-	// Decrease Font Size with Down Arrow
 	else if(evt.keyCode == down)
 	{
-		$('.font_size').slider('value', font_size-1);
+		$('article').animate({scrollTop: "+=100xpx" }, 250, 'swing', function(){ $('article').clearQueue(); });
 		evt.preventDefault();
 		evt.stopPropagation();
 		return false;
 	}
-	// Increase Font Size with Up Arrow
 	else if(evt.keyCode == up)
 	{
-		$('.font_size').slider('value', font_size+1);
+		$('article').animate({scrollTop: "-=100xpx" }, 250, 'swing', function(){ $('article').clearQueue(); });
 		evt.preventDefault();
 		evt.stopPropagation();
 		return false;
 	}
+
 	// Increase Speed with Right Arrow
 	else if(evt.keyCode == right)
 	{
@@ -284,6 +296,22 @@ function navigate(evt)
 		evt.stopPropagation();
 		return false;
 	}
+
+	else if(evt.keyCode == ab)
+	{
+		$('.font_size').slider('value', font_size+1);
+		evt.preventDefault();
+		evt.stopPropagation();
+		return false;
+	}
+	else if(evt.keyCode == zb)
+	{
+		$('.font_size').slider('value', font_size-1);
+		evt.preventDefault();
+		evt.stopPropagation();
+		return false;
+	}
+
 }
 
 // Start Teleprompter
@@ -316,7 +344,7 @@ function stop_teleprompter()
 // Update Teleprompter
 function update_teleprompter()
 {
-	$.cookie('teleprompter_text', $('#teleprompter').html());
+	storage.set('teleprompter_text', $('#teleprompter').html());
 }
 
 // Clean Teleprompter
@@ -334,6 +362,56 @@ function clean_teleprompter()
 	}
 
 	$('#teleprompter').html(text);
+}
+
+var CLIENT_ID = '992154876318-b07giv4pvttfkaj22cd1284ellgi97if.apps.googleusercontent.com';
+var API_KEY = 'AIzaSyDikzXvHwzmPmD-67gnk1O4W9X-GXGxXsc';
+var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
+var SCOPES = 'https://www.googleapis.com/auth/drive.readonly';
+
+function handleClientLoad() {
+        gapi.load('client:auth2', initClient);
+      }
+
+function initClient()
+{
+    gapi.client.init({
+          apiKey: API_KEY,
+          clientId: CLIENT_ID,
+          discoveryDocs: DISCOVERY_DOCS,
+          scope: SCOPES
+        });
+}
+
+
+function handleAuthClick(event) {
+	if (gapi.auth2.getAuthInstance().isSignedIn.get())
+	{
+        loadText();
+    }
+    
+    else
+    {
+    	gapi.auth2.getAuthInstance().signIn();
+    }
+}
+
+function loadText() {
+	var request = gapi.client.drive.files.export({
+	  'fileId': '1VmzmOp2QwuaZGSyfAHwI62j2QR-1o2fqdKnEk_BQnqQ',
+	  'mimeType': 'text/plain'
+	})
+	request.then(function(response) {
+	  $('#teleprompter').html(response.body.replace(/(?:\r\n|\r|\n)/g, '<br />'));
+	  clean_teleprompter();
+	  update_teleprompter();
+	  	$.cookie('teleprompter_text', $('#teleprompter').html());
+
+	  console.log(response.body);
+	}, function(err) {
+	  console.log('Error');
+	  console.log(err.result.error);
+	});
 }
 
 /*
