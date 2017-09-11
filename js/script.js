@@ -94,7 +94,8 @@ $(function() {
 
 	//Listen for Login Button Click
 	$('.login').click(function(){
-		handleAuthClick()
+		handleAuthClick();
+		$('.button.reset').trigger('click');
 	});
 
 	// Listen for Play Button Click
@@ -234,6 +235,7 @@ function navigate(evt)
 		down = 40,
 		ab = 65,
 		zb = 90,
+		ib = 73,
 		speed = $('.speed').slider('value'),
 		font_size = $('.font_size').slider('value');
 
@@ -309,6 +311,13 @@ function navigate(evt)
 	else if(evt.keyCode == zb)
 	{
 		$('.font_size').slider('value', font_size-1);
+		evt.preventDefault();
+		evt.stopPropagation();
+		return false;
+	}
+	else if(evt.keyCode == ib)
+	{
+		$('.button.login').trigger('click');
 		evt.preventDefault();
 		evt.stopPropagation();
 		return false;
