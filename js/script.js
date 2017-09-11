@@ -149,6 +149,10 @@ $(function() {
 		timer.resetTimer();
 		$('article').stop().animate({scrollTop: 0}, 100, 'linear', function(){ $('article').clearQueue(); });
 	});
+
+	// Turn flip y on default
+
+    $('.button.flipy').trigger('click');
 });
 
 // Manage Font Size Change
