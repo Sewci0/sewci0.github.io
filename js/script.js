@@ -290,10 +290,10 @@ function navigate(evt)
 	else if(evt.keyCode == down)
 	{
 		if($('.teleprompter').hasClass('flipx')){
-			$('article').animate({scrollTop: "-=100xpx" }, 250, 'swing', function(){ $('article').clearQueue(); });
+			$('article').animate({scrollTop: "-=100xpx" }, 100, 'swing', function(){ $('article').clearQueue(); });
 		}
 		else {
-			$('article').animate({scrollTop: "+=100xpx" }, 250, 'swing', function(){ $('article').clearQueue(); });
+			$('article').animate({scrollTop: "+=100xpx" }, 100, 'swing', function(){ $('article').clearQueue(); });
 		}
 		evt.preventDefault();
 		evt.stopPropagation();
@@ -302,10 +302,10 @@ function navigate(evt)
 	else if(evt.keyCode == up)
 	{
 		if($('.teleprompter').hasClass('flipx')){
-			$('article').animate({scrollTop: "+=100xpx" }, 250, 'swing', function(){ $('article').clearQueue(); });
+			$('article').animate({scrollTop: "+=100xpx" }, 100, 'swing', function(){ $('article').clearQueue(); });
 		}
 		else {
-			$('article').animate({scrollTop: "-=100xpx" }, 250, 'swing', function(){ $('article').clearQueue(); });
+			$('article').animate({scrollTop: "-=100xpx" }, 100, 'swing', function(){ $('article').clearQueue(); });
 		}
 		evt.preventDefault();
 		evt.stopPropagation();
@@ -413,8 +413,12 @@ function initClient()
           clientId: CLIENT_ID,
           discoveryDocs: DISCOVERY_DOCS,
           scope: SCOPES
+        }).then(function () {
+          gapi.auth2.getAuthInstance().isSignedIn.listen(handleAuthClick);
         });
 }
+
+
 
 
 function handleAuthClick(event) {
