@@ -290,10 +290,10 @@ function navigate(evt)
 	else if(evt.keyCode == down)
 	{
 		if($('.teleprompter').hasClass('flipx')){
-			$('article').animate({scrollTop: "-=100xpx" }, 100, 'swing', function(){ $('article').clearQueue(); });
+			$('article').animate({scrollTop: "+=150xpx" }, 100, 'swing', function(){ $('article').clearQueue(); });
 		}
 		else {
-			$('article').animate({scrollTop: "+=100xpx" }, 100, 'swing', function(){ $('article').clearQueue(); });
+			$('article').animate({scrollTop: "-=150xpx" }, 100, 'swing', function(){ $('article').clearQueue(); });
 		}
 		evt.preventDefault();
 		evt.stopPropagation();
@@ -302,10 +302,10 @@ function navigate(evt)
 	else if(evt.keyCode == up)
 	{
 		if($('.teleprompter').hasClass('flipx')){
-			$('article').animate({scrollTop: "+=100xpx" }, 100, 'swing', function(){ $('article').clearQueue(); });
+			$('article').animate({scrollTop: "-=150xpx" }, 100, 'swing', function(){ $('article').clearQueue(); });
 		}
 		else {
-			$('article').animate({scrollTop: "-=100xpx" }, 100, 'swing', function(){ $('article').clearQueue(); });
+			$('article').animate({scrollTop: "+=150xpx" }, 100, 'swing', function(){ $('article').clearQueue(); });
 		}
 		evt.preventDefault();
 		evt.stopPropagation();
