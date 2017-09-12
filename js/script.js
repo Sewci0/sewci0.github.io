@@ -352,7 +352,7 @@ function start_teleprompter()
 	$('body').addClass('playing');
 	$('.button.play').removeClass('icon-play').addClass('icon-pause');
 	$('header h1, header nav').fadeTo('slow', 0.15);
-	$('.marker, .overlay').fadeIn('slow');
+	//$('.marker, .overlay').fadeIn('slow');
 	$('header').fadeOut();
 
 	window.timer.startTimer();
